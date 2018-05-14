@@ -12,7 +12,7 @@
 #include <linux/i2c-dev.h>
 #include <errno.h>
 
-int read_ANA(int slave_module, int channel_nr)
+int read_ANA(int slave_module, int channel_nr)//slave_module=current i2c address (1-127), channel_nr=analog input (0-23 or 0-31(32ch SM)), return=readout (0-4095)
 {
 	int fd;
 	char buffer[4];
