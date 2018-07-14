@@ -2,6 +2,10 @@
  * #FCDS - Slave Module communication example for arduino
  * How-To read/writa data, just call the functions below.
  *
+ * Default I2C address for a Slave Module is 0x08
+ * If you got more than one and it's not labeled, please set your new addresses one by one,
+ * calling set_i2c_address_for_slave_module()
+ *
  * More info: fercsa@freemail.hu - www.fercsa.com
  */
 
