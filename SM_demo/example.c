@@ -6,8 +6,8 @@
  * If you got more than one and it's not labeled, please set your new addresses one by one,
  * calling set_i2c_address_for_slave_module()
  *
- * Compile and run: gcc example.c -o example && ./example 0x08 0
- * Where 0x08 is your Slave Module's I2C address in decimal, 0 is the channel number
+ * Compile and run: gcc example.c -o example && ./example 8 0
+ * Where 8 is your Slave Module's I2C address in decimal, 0 is the channel number
  *
  * More info: fercsa@freemail.hu - www.fercsa.com
  */
