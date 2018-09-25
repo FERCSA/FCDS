@@ -58,26 +58,26 @@ void set_i2c_address_for_slave_module(byte slave_module, int value)//slave_modul
 
 void set_PWM_divider(byte slave_module, int value)//divide by value+1 where value=0-65535
 {
-  WireSM_beginTransmission(i2c_slave[slave_module]);
-  WireSM_write(0x13);//packet stream checker on the start..
-  WireSM_write(0xF2);//command
-  WireSM_write((byte)(value >> 8));     // MSB
-  WireSM_write((byte)(value & 0xFF));   // LSB
-  WireSM_write(0x69);//..and end bytes
-  WireSM_endTransmission();
+  Wire.beginTransmission(i2c_slave[slave_module]);
+  Wire.write(0x13);//packet stream checker on the start..
+  Wire.write(0xF2);//command
+  Wire.write((byte)(value >> 8));     // MSB
+  Wire.write((byte)(value & 0xFF));   // LSB
+  Wire.write(0x69);//..and end bytes
+  Wire.endTransmission();
   
   delay(50);
 }
 
 void set_PWM_fractional_divider(byte slave_module, int value)//divide by y/32 where y=0-31, not affected when x=0
 {
-  WireSM_beginTransmission(i2c_slave[slave_module]);
-  WireSM_write(0x13);//packet stream checker on the start..
-  WireSM_write(0xF3);//command
-  WireSM_write((byte)(value >> 8));     // MSB
-  WireSM_write((byte)(value & 0xFF));   // LSB
-  WireSM_write(0x69);//..and end bytes
-  WireSM_endTransmission();
+  Wire.beginTransmission(i2c_slave[slave_module]);
+  Wire.write(0x13);//packet stream checker on the start..
+  Wire.write(0xF3);//command
+  Wire.write((byte)(value >> 8));     // MSB
+  Wire.write((byte)(value & 0xFF));   // LSB
+  Wire.write(0x69);//..and end bytes
+  Wire.endTransmission();
 
   delay(50);
 }
@@ -85,16 +85,16 @@ void set_PWM_fractional_divider(byte slave_module, int value)//divide by y/32 wh
 int get_PWM_divider(byte slave_module)
 {
   unsigned int data = 0x00;//when fail read null for sure..
-  WireSM_beginTransmission(i2c_slave[slave_module]);
-  WireSM_write(0x13);//packet stream checker on the start..
-  WireSM_write(0xF4);//command
-  WireSM_write(0x69);//..and end bytes
-  WireSM_endTransmission();
+  Wire.beginTransmission(i2c_slave[slave_module]);
+  Wire.write(0x13);//packet stream checker on the start..
+  Wire.write(0xF4);//command
+  Wire.write(0x69);//..and end bytes
+  Wire.endTransmission();
 
-  WireSM_requestFrom((int)i2c_slave[slave_module], 4);
+  Wire.requestFrom((int)i2c_slave[slave_module], 4);
 
-  while( WireSM_available() ){
-    data = (data << 8) | WireSM_read();
+  while( Wire.available() ){
+    data = (data << 8) | Wire.read();
   }
 
   if( (data >> 24) == 0x13 && (data & 0xFF) == 0x69)//packet stream checker on the start and end bytes
@@ -107,16 +107,16 @@ int get_PWM_fractional_divider(byte slave_module)
 {
   unsigned int data = 0x00;//when fail read null for sure..
 
-  WireSM_beginTransmission(i2c_slave[slave_module]);
-  WireSM_write(0x13);//packet stream checker on the start..
-  WireSM_write(0xF5);//command
-  WireSM_write(0x69);//..and end bytes
-  WireSM_endTransmission();
+  Wire.beginTransmission(i2c_slave[slave_module]);
+  Wire.write(0x13);//packet stream checker on the start..
+  Wire.write(0xF5);//command
+  Wire.write(0x69);//..and end bytes
+  Wire.endTransmission();
   
-  WireSM_requestFrom((int)i2c_slave[slave_module], 4);
+  Wire.requestFrom((int)i2c_slave[slave_module], 4);
 
-  while( WireSM_available() ){
-    data = (data << 8) | WireSM_read();
+  while( Wire.available() ){
+    data = (data << 8) | Wire.read();
   }
 
   if( (data >> 24) == 0x13 && (data & 0xFF) == 0x69)//packet stream checker on the start and end bytes
