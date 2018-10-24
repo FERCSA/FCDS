@@ -139,7 +139,10 @@ int get_PWM_fractional_divider(byte slave_module){
 }
 
 void setup(){
+	Serial.begin(115200);
 	Wire.begin();
+	pinMode(SCL, INPUT_PULLUP);
+	pinMode(SDA, INPUT_PULLUP);
 	
 	if( your_board == "24CH_ADC_8CH_PWM" ){//activate PWMs..
 		write_PWM(slave_module, 0, 0x0FFF);//PWM0
