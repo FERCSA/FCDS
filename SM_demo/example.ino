@@ -27,7 +27,7 @@ void set_i2c_address_for_slave_module(byte slave_module, int value){//slave_modu
 
 /* ADC related functions */
 unsigned int read_ANA(byte slave_module, byte channel_nr){//slave_module=current i2c address (1-127), channel_nr=analog input (0-23 or 0-31(32ch SM)), return=readout (0-4095)
-	unsigned int data = 0x00;//when fail read null for sure..
+	unsigned long data = 0x00;//when fail read null for sure..
 
 	Wire.beginTransmission(slave_module);
 	Wire.write(0x13);//for the packet stream checker on the start..
@@ -35,7 +35,7 @@ unsigned int read_ANA(byte slave_module, byte channel_nr){//slave_module=current
 	Wire.write(0x69);//..and at the end
 	Wire.endTransmission();
 
-	Wire.requestFrom(slave_module, 4);
+	Wire.requestFrom((int)slave_module, 4);
 
 	while( Wire.available() ){
 		data = (data << 8) | Wire.read();
