@@ -4,7 +4,7 @@
  *
  * Default I2C address for a Slave Module is 0x08
  * If you got more than one and it's not labeled, please set your new addresses one by one,
- * calling set_i2c_address_for_slave_module() , you can find it in the arduino example
+ * calling set_i2c_address_for_slave_module()
  *
  * Compile and run: gcc example.c -o example && ./example 8 0
  * Where 0x08 is your Slave Module's I2C address in decimal, 0 is the channel number
@@ -122,9 +122,10 @@ int main(int argc, char** argv){
     int i = 0;
     int data = 0;
     float voltage = 0;
-    float vref = atoi(argv[1]);
+    float vref = 0;
 
     if(argv[3] == NULL){
+	vref = atoi(argv[1]);
 	for(i=0;i<32;i++){
 	    data = read_ANA(atoi(argv[2]), i);//i2c address, channel number
 	    voltage = (vref / 4095) * data;
@@ -136,6 +137,7 @@ int main(int argc, char** argv){
 	return 1;
     }
     else{
+	vref = atoi(argv[1]);
 	data = read_ANA(atoi(argv[2]), atoi(argv[3]));//i2c address, channel number
 	voltage = (vref / 4095) * data;
 	printf("CH%02d 0x%04X %04d %.2fV\r\n", atoi(argv[3]), data, data, voltage);
